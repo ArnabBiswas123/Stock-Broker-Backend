@@ -2,9 +2,11 @@ const express = require("express");
 const connectDB = require("./db/connect");
 const app = express();
 const userRouter=require('./routes/userRouter')
+const stockRouter=require('./routes/stockRouter')
+require("dotenv").config();
 const port = process.env.PORT || 5000;
 
-require("dotenv").config();
+
 
 const cors = require("cors");
 app.use(cors());
@@ -16,6 +18,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/v1/user",userRouter)
+app.use("/api/v1/stock",stockRouter)
 const start = async () => {
     try {
       await connectDB(process.env.MONGO_URI);
