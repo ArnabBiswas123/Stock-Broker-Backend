@@ -12,8 +12,8 @@ const protect = async (req, res, next) => {
         token = req.headers.authorization.split(" ")[1];
   
         const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-        
-        req.user = await User.findById(decoded.userData.id).select("-password");
+         
+        req.user = await User.findById(decoded.userData.id).select("-password -wishlist -balence -transaction");
         if(!req.user){
           return res.status(401).json({success:false, msg:'User is not autherized'})
         }
