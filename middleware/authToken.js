@@ -13,7 +13,7 @@ const protect = async (req, res, next) => {
   
         const decoded = await jwt.verify(token, process.env.JWT_SECRET);
          
-        req.user = await User.findById(decoded.userData.id).select("-password -wishlist -balence -transaction");
+        req.user = await User.findById(decoded.userData.id).select("-password -wishlist -balence -transaction -purchases");
         if(!req.user){
           return res.status(401).json({success:false, msg:'User is not autherized'})
         }

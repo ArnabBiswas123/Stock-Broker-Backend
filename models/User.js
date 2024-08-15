@@ -24,6 +24,17 @@ const transactionSchema = new Schema(
   }
 );
 
+const purchaseSchema = new Schema(
+  {
+    stock: { type: mongoose.Schema.Types.ObjectId, ref: "Stocks", required: true },
+    quantity: { type: Number, required: true },
+    price: { type: Number, required: true }, 
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const userModel = new Schema(
   {
     name: { type: String, required: true },
@@ -32,6 +43,7 @@ const userModel = new Schema(
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Stocks" }],
     balance:{type:Number,default:0},
     transaction: [transactionSchema],
+    purchases: [purchaseSchema],
   },
   {
     timestamps: true,
