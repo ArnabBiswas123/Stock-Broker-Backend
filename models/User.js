@@ -8,9 +8,26 @@ const transactionSchema = new Schema(
       enum: ["deposit", "withdraw", "buy", "sell"],
       required: true,
     },
-    method: { type: String, enum: ["card", "upi"], required: true },
-    account:{type:String,required:true},
+    method: {
+      type: String,
+      enum: ["card", "upi"],
+      required: function () {
+        return this.type === "deposit" || this.type === "withdraw";
+      },
+    },
+    account: {
+      type: String,
+      required: function () {
+        return this.type === "deposit" || this.type === "withdraw";
+      },
+    },
     amount: { type: Number, required: true },
+    quantity: {
+      type: Number,
+      required: function () {
+        return this.type === "buy" || this.type === "sell";
+      },
+    },
     stock: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Stocks",
@@ -26,9 +43,13 @@ const transactionSchema = new Schema(
 
 const purchaseSchema = new Schema(
   {
-    stock: { type: mongoose.Schema.Types.ObjectId, ref: "Stocks", required: true },
+    stock: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Stocks",
+      required: true,
+    },
     quantity: { type: Number, required: true },
-    price: { type: Number, required: true }, 
+    price: { type: Number, required: true },
   },
   {
     timestamps: true,
@@ -38,10 +59,10 @@ const purchaseSchema = new Schema(
 const userModel = new Schema(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true,  unique: true },
     password: { type: String, required: true },
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Stocks" }],
-    balance:{type:Number,default:0},
+    balance: { type: Number, default: 0 },
     transaction: [transactionSchema],
     purchases: [purchaseSchema],
   },

@@ -3,18 +3,18 @@ const Stocks = require("../models/Stocks");
 
 const stockSell = async (req, res) => {
   try {
-    const { ticker, quantity, price, method, account } = req.body;
+    const { ticker, quantity, price } = req.body;
     const userId = req.user.id;
 
     // Validate request
-    if (!ticker || !quantity || !price || !account) {
+    if (!ticker || !quantity || !price ) {
       return res.status(400).json({ message: "All fields are required." });
     }
-    if (method.toLowerCase() !== "card" && method.toLowerCase() !== "upi") {
-      return res
-        .status(400)
-        .json({ success: false, msg: "Invalid payment method." });
-    }
+    // if (method.toLowerCase() !== "card" && method.toLowerCase() !== "upi") {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, msg: "Invalid payment method." });
+    // }
     if (
       !Number.isInteger(quantity) || 
       quantity <= 0 ||
@@ -70,8 +70,7 @@ const stockSell = async (req, res) => {
     }
     user.transaction.push({
       type: "sell",
-      method: method,
-      account: account,
+      quantity:quantity,
       amount: totalRevenue,
       stock: stock._id,
     });

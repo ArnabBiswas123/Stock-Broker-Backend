@@ -14,6 +14,9 @@ const getAllTransactions = require("../controllers/getAllTransactions");
 const stockBuy = require("../controllers/stockBuy");
 const stockSell = require("../controllers/stockSell");
 const getAllPurchases = require("../controllers/getAllPurchases");
+const sendEmail = require("../controllers/SendEmail");
+const varifyEmail = require("../controllers/VerifyEmail");
+const { protectOtp } = require("../middleware/authOtp");
 router.post('/signup', validateSignup, signup);
 router.post('/login',login)
 router.get('/profile',protect,myProfile)
@@ -27,5 +30,7 @@ router.get('/alltransactions',protect,getAllTransactions)
 router.get('/allpurchases',protect,getAllPurchases)
 router.post('/stockbuy',protect, stockBuy);
 router.post('/stocksell',protect, stockSell);
+router.post('/sendemail', sendEmail);
+router.post('/verifyemail',protectOtp, varifyEmail);
 
 module.exports = router;
