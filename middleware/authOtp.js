@@ -14,7 +14,7 @@ const protectOtp = async (req, res, next) => {
         const decoded = await jwt.verify(token, process.env.JWT_SECRET);
          
         req.user = await User.findOne({email:decoded.userData.email}).select("-password -wishlist -balence -transaction -purchases");
-        if(!req.user){
+        if(!req.user||req.user.active===false){
           return res.status(401).json({success:false, msg:'User is not autherized'})
         }
   

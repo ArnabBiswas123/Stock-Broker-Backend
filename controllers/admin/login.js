@@ -1,23 +1,17 @@
-const User = require("../models/User");
+const Admin = require("../../models/Admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const login=async(req, res)=>{
     try {
-        let { email, password } = req.body;
-        if (!email || !password) {
+        let { user_name, password } = req.body;
+        if (!user_name || !password) {
             return res.json({ success: false, msg: "Send all fields" });
           }
-          let userData = await User.findOne({ email });
+          let userData = await Admin.findOne({ user_name });
           if (!userData) {
             return res
               .status(400)
               .json({ success: false, msg: "Try logging valid credentials" });
-          }
-
-          if(!userData.active){
-            return res
-            .status(400)
-            .json({ success: false, msg: "Your access removed by the admin" });
           }
           const pwdCompare = await bcrypt.compare(
             req.body.password,

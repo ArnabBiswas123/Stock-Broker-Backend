@@ -34,7 +34,7 @@ const stockDetails = async (req, res) => {
     }
     dataobj = {};
     data = data[0];
-    
+    // console.log(data);
     dataobj["lastPrice"] = data["last"].toFixed(2);
     dataobj["prevClose"] = data["prevClose"].toFixed(2);
     dataobj["change"] = dataobj["lastPrice"] - dataobj["prevClose"];

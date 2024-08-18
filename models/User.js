@@ -61,6 +61,7 @@ const userModel = new Schema(
     name: { type: String, required: true },
     email: { type: String, required: true,  unique: true },
     password: { type: String, required: true },
+    active: { type: Boolean, default: true, required:true },
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Stocks" }],
     balance: { type: Number, default: 0 },
     transaction: [transactionSchema],
