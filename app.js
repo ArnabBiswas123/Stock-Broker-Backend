@@ -4,6 +4,7 @@ const app = express();
 const userRouter=require('./routes/userRouter')
 const adminRouter=require('./routes/adminRouter')
 const stockRouter=require('./routes/stockRouter')
+const predictionRouter=require('./routes/predictionRouter')
 
 require("dotenv").config();
 const port = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/stock",stockRouter)
+app.use("/api/v1/prediction",predictionRouter)
 app.use("/api/v1/admin",adminRouter)
 const start = async () => {
     try {
@@ -35,3 +37,4 @@ const start = async () => {
   };
   
 start();
+module.exports=app

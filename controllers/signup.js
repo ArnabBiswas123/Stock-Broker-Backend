@@ -33,7 +33,7 @@ const signup = async (req, res) => {
       password: securepassword,
     });
 
-    return res.json({ success: true, msg:"Admin created successfully" });
+    return res.json({ success: true, msg:"User created successfully" });
   } catch (error) {
     console.log(error);
     res.json({ success: false, msg: "Internal server error" });
